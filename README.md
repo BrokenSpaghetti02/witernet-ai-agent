@@ -1,5 +1,5 @@
 # witernet-ai-agent
-This ai-agent is a simple webapp that allows the user to upload a set of PDF files to form the knowledge base of the AI agent.
+This project is a simple webapp that allows the user to upload a set of PDF files to form the knowledge base of the AI agent.
 
 ## Step 1
 Open up a new terminal window, clone this repository, and go to the root directory of the repo.
@@ -11,7 +11,7 @@ cd witernet-ai-agent
 ## Step 2
 Install all the dependencies.
 ```
-pip3 install requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Step 3
@@ -34,4 +34,6 @@ streamlit run app.py
 Select ```Browse Files``` to select the PDF files for creating the desired knowledge base. This process will take some time depending on the system's resources.
 
 ## Step 7
-After the PDF files are process, ask away.
+After the PDF files are processed, ask away.
+
+If any issues or bugs are faced, please post an issue and I will get back to you shortly.

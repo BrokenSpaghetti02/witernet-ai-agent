@@ -7,6 +7,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores.utils import filter_complex_metadata
+from dotenv import load_dotenv
+import os
 
 class ChatPDF:
     vector_store = None
@@ -15,16 +17,17 @@ class ChatPDF:
 
     def __init__(self):
         self.model = ChatOllama(model="llama3.2")
-        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=100)
+        self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=2056, chunk_overlap=300)
         self.prompt = PromptTemplate.from_template(
             """
-            <s> [INST] You are a helper for question answering tasks. Use the following context to answer the question.
-                If you don't know the answer, just say you don't know. Use three sentences or less and be concise in your answer. 
-                [/INST] 
+            <s> [INST] You are an expert on networking topics. Use the following context to answer the question. 
+            Ensure that your answer includes *all the relevant steps and details* required to perform the task. 
+            If you don't know the answer, say you don't know. 
+            [/INST] 
             </s> 
             [INST] Question: {question} 
             Context: {context} 
-            Answer: [/INST]
+            Answer (include all steps): [/INST]
             """
         )
 
@@ -32,7 +35,7 @@ class ChatPDF:
         docs = PyPDFLoader(file_path=pdf_file_path).load()
         chunks = self.text_splitter.split_documents(docs)
         chunks = filter_complex_metadata(chunks)
-
+        
         vector_store = Chroma.from_documents(documents=chunks, embedding=FastEmbedEmbeddings())
         self.retriever = vector_store.as_retriever(
             search_type="similarity_score_threshold",

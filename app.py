@@ -23,7 +23,6 @@ def process_input():
         st.session_state["messages"].append((user_text, True))
         st.session_state["messages"].append((agent_text, False))
 
-
 def read_and_save_file():
     st.session_state["assistant"].clear()
     st.session_state["messages"] = []
@@ -37,7 +36,6 @@ def read_and_save_file():
         with st.session_state["ingestion_spinner"], st.spinner(f"Ingesting {file.name}"):
             st.session_state["assistant"].ingest(file_path)
         os.remove(file_path)
-
 
 def page():
     if len(st.session_state) == 0:
